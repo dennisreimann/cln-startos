@@ -87,7 +87,6 @@ struct RpcConfig {
 #[derive(Deserialize)]
 #[serde(rename_all = "kebab-case")]
 struct AdvancedConfig {
-    testnet: bool,
     tor_only: bool,
     fee_base: usize,
     fee_rate: usize,
@@ -209,11 +208,12 @@ fn main() -> Result<(), anyhow::Error> {
         None => panic!("Bitcoind returned invalid response for getblockchaininfo"),
         Some(s) => s,
     };
+    println!("{}", network);
 
     write!(
         outfile,
         include_str!("config.template"),
-        network = if network == "testnet" {
+        network = if network == "test" {
             "testnet"
         } else {
             "bitcoin"
