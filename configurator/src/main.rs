@@ -87,6 +87,7 @@ struct RpcConfig {
 #[derive(Deserialize)]
 #[serde(rename_all = "kebab-case")]
 struct AdvancedConfig {
+    testnet: bool,
     tor_only: bool,
     fee_base: usize,
     fee_rate: usize,
@@ -194,10 +195,29 @@ fn main() -> Result<(), anyhow::Error> {
     };
     let peer_tor_address = std::env::var("TOR_ADDRESS")?;
     let tor_proxy: SocketAddr = (std::env::var("HOST_IP")?.parse::<IpAddr>()?, 9050).into();
+    let chain_info = serde_json::from_slice::<serde_json::value::Value>(
+        &std::process::Command::new("bitcoin-cli")
+            .arg(format!("-rpcconnect={}", bitcoin_rpc_host))
+            .arg(format!("-rpcport={}", bitcoin_rpc_port))
+            .arg(format!("-rpcuser={}", bitcoin_rpc_user))
+            .arg(format!("-rpcpassword={}", bitcoin_rpc_pass))
+            .arg("getblockchaininfo")
+            .output()?
+            .stdout,
+    )?;
+    let network = match chain_info.get("chain").and_then(|s| s.as_str()) {
+        None => panic!("Bitcoind returned invalid response for getblockchaininfo"),
+        Some(s) => s,
+    };
 
     write!(
         outfile,
         include_str!("config.template"),
+        network = if network == "testnet" {
+            "testnet"
+        } else {
+            "bitcoin"
+        },
         alias = config.alias.unwrap_or(alias),
         rgb = config.color,
         bitcoin_rpc_user = bitcoin_rpc_user,
