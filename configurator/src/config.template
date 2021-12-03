@@ -30,4 +30,3 @@ cltv-delta={cltv_delta}
 {enable_http_plugin}
 {enable_rebalance_plugin}
 {enable_summary_plugin}
-{enable_rest_plugin}
