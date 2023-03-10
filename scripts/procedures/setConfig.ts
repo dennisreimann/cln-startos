@@ -312,7 +312,8 @@ function configMaker(alias: Alias, config: SetConfig) {
     : "";
   const bitcoinBackend = config.advanced.plugins.sauron
     // ? "plugin=/usr/local/libexec/c-lightning/plugins/sauron/sauron.py\ndisable-plugin=bcli\nsauron-api-endpoint=https://blockstream.info/api/\nsauron-tor-proxy=embassy:9050"
-    ? "plugin=/usr/local/libexec/c-lightning/plugins/sauron/sauron.py\ndisable-plugin=bcli\nsauron-api-endpoint=https://blockstream.info/api/"
+    // ? "plugin=/usr/local/libexec/c-lightning/plugins/sauron/sauron.py\ndisable-plugin=bcli\nsauron-api-endpoint=https://blockstream.info/api/"
+    ? "plugin=/usr/local/libexec/c-lightning/plugins/btcli4j/btcli4j.sh\ndisable-plugin=bcli\nbtcli4j-proxy-disabled"
     : `bitcoin-rpcuser=${bitcoin_rpc_user}\nbitcoin-rpcpassword=${bitcoin_rpc_pass}\nbitcoin-rpcconnect=${bitcoin_rpc_host}\nbitcoin-rpcport=${bitcoin_rpc_port}`;
   const enableCircularPlugin = config.advanced.plugins.circular
     ? "plugin=/usr/local/libexec/c-lightning/plugins/circular"

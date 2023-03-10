@@ -53,6 +53,17 @@ RUN make
 RUN make install
 RUN strip /usr/local/bin/clboss
 
+# btcli4j builder
+FROM openjdk:11 as btcli4j
+
+WORKDIR /jdk
+
+RUN git clone https://github.com/clightning4j/btcli4j.git && cd btcli4j && \
+    ./gradlew createRunnableScript -Dorg.gradle.daemon=false --no-build-cache && \
+    cd .. && \
+    git clone https://github.com/clightning4j/lightning-rest.git && cd lightning-rest && \
+    ./gradlew createRunnableScript -Dorg.gradle.daemon=false --no-build-cache
+
 # lightningd builder
 FROM debian:bullseye-slim as builder
 
@@ -152,7 +163,7 @@ COPY --from=downloader /opt/tini /usr/bin/tini
 # CLBOSS
 COPY --from=clboss /usr/local/bin/clboss /usr/local/libexec/c-lightning/plugins/clboss
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
     dnsutils \
     socat \
     inotify-tools \
@@ -160,6 +171,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libcurl4-gnutls-dev \
     libev-dev \
     libsqlite3-dev \
+    openjdk-11-jre \
     procps \
     python3 \
     python3-gdbm \
@@ -180,8 +192,6 @@ ARG ARCH
 
 RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
 RUN wget -qO /usr/local/bin/websocat https://github.com/vi/websocat/releases/download/v1.11.0/websocat.${ARCH}-unknown-linux-musl && chmod +x /usr/local/bin/websocat
-# RUN wget https://github.com/mikefarah/yq/releases/download/v4.26.1/yq_linux_arm.tar.gz -O - |\
-#     tar xz && mv yq_linux_arm /usr/bin/yq
 
 # PLUGINS
 WORKDIR /usr/local/libexec/c-lightning/plugins
@@ -204,10 +214,10 @@ ADD ./reckless /usr/local/libexec/c-lightning/plugins/reckless
 RUN pip install -r /usr/local/libexec/c-lightning/plugins/reckless/requirements.txt
 RUN chmod a+x /usr/local/libexec/c-lightning/plugins/reckless/reckless.py
 
-# sauron
-ADD ./plugins/sauron /usr/local/libexec/c-lightning/plugins/sauron
-RUN pip install -r /usr/local/libexec/c-lightning/plugins/sauron/requirements.txt
-RUN chmod a+x /usr/local/libexec/c-lightning/plugins/sauron/sauron.py
+# btcli4j
+COPY --from=btcli4j /jdk/btcli4j/build/libs/*.jar /usr/local/libexec/c-lightning/plugins/btcli4j/
+COPY btcli4j.sh /usr/local/libexec/c-lightning/plugins/btcli4j/btcli4j.sh
+RUN chmod a+x /usr/local/libexec/c-lightning/plugins/btcli4j/btcli4j.sh
 
 # # circular
 RUN wget https://github.com/giovannizotta/circular/releases/download/v1.1.1/circular-v1.1.1-linux-${PLATFORM}.tar.gz -O - |\
