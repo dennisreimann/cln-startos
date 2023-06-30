@@ -210,10 +210,10 @@ function configMaker(alias: Alias, config: SetConfig) {
   const enableRestPlugin = config.advanced.plugins.rest
     ? "plugin=/usr/local/libexec/c-lightning/plugins/c-lightning-REST/clrest.js\nrest-port=3001\nrest-protocol=https\n"
     : "";
-  const enableClbossPlugin =
-    config.advanced.plugins.clboss.enabled === "enabled"
-      ? "plugin=/usr/local/libexec/c-lightning/plugins/clboss"
-      : "";
+  // const enableClbossPlugin =
+  //   config.advanced.plugins.clboss.enabled === "enabled"
+  //     ? "plugin=/usr/local/libexec/c-lightning/plugins/clboss"
+  //     : "";
 
   return `
 network=bitcoin
@@ -251,7 +251,6 @@ ${enableHttpPlugin}
 ${enableRebalancePlugin}
 ${enableSummaryPlugin}
 ${enableRestPlugin}
-${enableClbossPlugin}`;
 }
 
 export const setConfig: T.ExpectedExports.setConfig = async (

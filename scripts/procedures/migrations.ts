@@ -189,15 +189,6 @@ export const migration: T.ExpectedExports.migration =
       "23.05.1": {
         up: compat.migrations.updateConfig(
           (config) => {
-            if (
-              matches.shape({
-                bitcoind: matches.shape({
-                  variants: literal("internal-proxy"),
-                },['variants'])
-              }).test(config)
-            ) {
-              delete config.bitcoind.variants;
-            }
             return config;
           },
           false,

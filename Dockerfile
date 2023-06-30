@@ -39,28 +39,28 @@ RUN mkdir /opt/bitcoin && cd /opt/bitcoin \
     && rm $BITCOIN_TARBALL
 
 # clboss builder
-FROM debian:bullseye-slim as clboss
+# FROM debian:bullseye-slim as clboss
 
-RUN apt-get update -qq && \
-    apt-get install -qq -y --no-install-recommends \
-        # autoconf \
-        autoconf-archive \
-        automake \
-        build-essential \
-        git \
-        libcurl4-gnutls-dev \
-        libev-dev \
-        libsqlite3-dev \
-        libtool \
-        pkg-config
+# RUN apt-get update -qq && \
+#     apt-get install -qq -y --no-install-recommends \
+#         # autoconf \
+#         autoconf-archive \
+#         automake \
+#         build-essential \
+#         git \
+#         libcurl4-gnutls-dev \
+#         libev-dev \
+#         libsqlite3-dev \
+#         libtool \
+#         pkg-config
 
-COPY clboss/. /tmp/clboss
-WORKDIR /tmp/clboss
-RUN autoreconf -i
-RUN ./configure
-RUN make
-RUN make install
-RUN strip /usr/local/bin/clboss
+# COPY clboss/. /tmp/clboss
+# WORKDIR /tmp/clboss
+# RUN autoreconf -i
+# RUN ./configure
+# RUN make
+# RUN make install
+# RUN strip /usr/local/bin/clboss
 
 # lightningd builder
 FROM debian:bullseye-slim as builder

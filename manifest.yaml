@@ -10,6 +10,7 @@ release-notes: |-
   * Update upstream to 23.05.1 [release notes](https://github.com/ElementsProject/lightning/releases/tag/v23.05.1).
   * Remove duplicated and unnecessary information from properties.
   * Remove Proxy as a dependency option.
+  * Remove CLBOSS
 build: ["make"]
 description:
   short: "An implementation of the Lightning Network protocol by Blockstream."
