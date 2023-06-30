@@ -154,7 +154,7 @@ ENV LIGHTNINGD_PORT=9735
 ENV LIGHTNINGD_NETWORK=bitcoin
 
 # CLBOSS
-COPY --from=clboss /usr/local/bin/clboss /usr/local/libexec/c-lightning/plugins/clboss
+# COPY --from=clboss /usr/local/bin/clboss /usr/local/libexec/c-lightning/plugins/clboss
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
