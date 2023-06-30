@@ -250,7 +250,7 @@ experimental-websocket-port=4269
 ${enableHttpPlugin}
 ${enableRebalancePlugin}
 ${enableSummaryPlugin}
-${enableRestPlugin}
+${enableRestPlugin}`;
 }
 
 export const setConfig: T.ExpectedExports.setConfig = async (
