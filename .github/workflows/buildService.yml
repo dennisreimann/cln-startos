@@ -56,7 +56,7 @@ jobs:
         run: |
           git submodule update --init --recursive
           embassy-sdk init
-          make
+          make x86
           mv c-lightning*s9pk ~/
       - name: Upload .s9pk
         uses: actions/upload-artifact@v3
