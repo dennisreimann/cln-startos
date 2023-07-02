@@ -38,6 +38,8 @@ RUN mkdir /opt/bitcoin && cd /opt/bitcoin \
     && tar -xzvf $BITCOIN_TARBALL $BD/bitcoin-cli --strip-components=1 \
     && rm $BITCOIN_TARBALL
 
+RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
+
 # clboss builder
 FROM debian:bullseye-slim as clboss
 
@@ -164,7 +166,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-gdbm \
     python3-pip \
     libpq5 \
-    wget \
     xxd \
     && rm -rf /var/lib/apt/lists/*
 
@@ -173,10 +174,7 @@ RUN mkdir $LIGHTNINGD_DATA && \
 VOLUME [ "/root/.lightning" ]
 COPY --from=builder /tmp/lightning_install/ /usr/local/
 COPY --from=downloader /opt/bitcoin/bin /usr/bin
-
-ARG PLATFORM
-
-RUN wget -qO /usr/local/bin/yq https://github.com/mikefarah/yq/releases/latest/download/yq_linux_${PLATFORM} && chmod +x /usr/local/bin/yq
+COPY --from=downloader /usr/local/bin/yq /usr/local/bin/yq
 
 # PLUGINS
 WORKDIR /usr/local/libexec/c-lightning/plugins
