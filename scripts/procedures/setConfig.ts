@@ -319,6 +319,9 @@ function configMaker(alias: Alias, config: SetConfig) {
   const enableSummaryPlugin = config.advanced.plugins.summary
     ? "plugin=/usr/local/libexec/c-lightning/plugins/summary/summary.py"
     : "";
+  const enableSlingPlugin = config.advanced.plugins.sling
+    ? "plugin=/usr/local/libexec/c-lightning/plugins/sling/slings.rs"
+    : "";
   const sparkoPassword = config.advanced.plugins.sparko.password;
   const enableSparkoPlugin = config.advanced.plugins.sparko.enabled
     ? `plugin=/usr/local/libexec/c-lightning/plugins/sparko\nsparko-host=0.0.0.0\nsparko-port=9737\nsparko-keys=${sparkoPassword}`
@@ -365,12 +368,12 @@ ${enableExperimentalShutdownWrongFunding}
 experimental-websocket-port=4269
 ${enableRebalancePlugin}
 ${enableSummaryPlugin}
+${enableSlingPlugin}
 ${enableSparkoPlugin}
 ${enableRestPlugin}
 ${enableClbossPlugin}
 ${enableWatchtowerClientPlugin}`;
 }
-// 02b4891f562c8b80571ddd2eeea48530471c30766295e1c78556ae4c4422d24436@recnedb7xfhzjdrcgxongzli3a6qyrv5jwgowoho3v5g3rwk7kkglrid.onion:9814
 const validURI = /^([a-fA-F0-9]{66}@)([^:]+?)(:\d{1,5})?$/m;
 export const setConfig: T.ExpectedExports.setConfig = async (
   effects: T.Effects,

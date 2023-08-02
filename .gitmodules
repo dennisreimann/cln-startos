@@ -16,3 +16,6 @@
 [submodule "ui"]
 	path = ui
 	url = https://github.com/ElementsProject/cln-application.git
+[submodule "sling"]
+	path = sling
+	url = https://github.com/daywalker90/sling

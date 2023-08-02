@@ -202,6 +202,10 @@ RUN chmod a+x /usr/local/libexec/c-lightning/plugins/summary/summary.py
 # sparko
 RUN wget -qO /usr/local/libexec/c-lightning/plugins/sparko https://github.com/fiatjaf/sparko/releases/download/v2.9/sparko_linux_${PLATFORM} && chmod +x /usr/local/libexec/c-lightning/plugins/sparko
 
+# sling
+ADD ./sling /usr/local/libexec/c-lightning/plugins/sling
+RUN chmod a+x /usr/local/libexec/c-lightning/plugins/sling/slings.rs
+
 # c-lightning-REST
 ADD ./c-lightning-REST /usr/local/libexec/c-lightning/plugins/c-lightning-REST
 WORKDIR /usr/local/libexec/c-lightning/plugins/c-lightning-REST

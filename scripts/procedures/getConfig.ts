@@ -547,6 +547,13 @@ export const [getConfig, setConfigMatcher] = compat.getConfigAndMatcher({
               "Enables the `summary` rpc command, which outputs a text summary of your node, including fiat amounts.\nCan be called via command line or the Spark console.        \n\nSource: https://github.com/lightningd/plugins/tree/master/summary\n",
             default: false,
           },
+          sling: {
+            type: "boolean",
+            name: "Enable Sling Plugin",
+            description:
+              "A core lightning plugin to automatically rebalance multiple channels.        \n\nSource: https://github.com/daywalker90/sling\n",
+            default: false,
+          },
           "sparko": {
             type: "object",
             name: "Sparko Options",
