@@ -1,5 +1,5 @@
 id: c-lightning
-version: 23.02.2.8
+version: 23.02.2.9
 title: Core Lightning
 license: BSD-MIT
 wrapper-repo: https://github.com/Start9Labs/c-lightning-wrapper
@@ -7,9 +7,7 @@ upstream-repo: https://github.com/ElementsProject/lightning
 support-site: https://github.com/ElementsProject/lightning/issues
 marketing-site: https://blockstream.com/lightning
 release-notes: |-
-  * Expose UI with authentication
-  * Replace HTTP plugin with Sparko
-  * Add The Eye of Satoshi watchtower server and client plugin
+  * Fix UI bug preventing the UI from connecting the the Core Lightning Daemon.
 build: ["make"]
 description:
   short: "An implementation of the Lightning Network protocol by Blockstream."
