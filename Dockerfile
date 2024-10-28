@@ -65,7 +65,8 @@ COPY clboss/. /tmp/clboss
 WORKDIR /tmp/clboss
 RUN autoreconf -i
 RUN ./configure
-RUN ./generate_commit_hash.sh
+COPY ./.git/modules/clboss /tmp/.git/modules/clboss
+RUN cat commit_hash.h
 RUN make
 RUN make install
 RUN strip /usr/local/bin/clboss
