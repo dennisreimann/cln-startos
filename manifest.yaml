@@ -8,7 +8,7 @@ support-site: https://github.com/ElementsProject/lightning/issues
 marketing-site: https://blockstream.com/lightning
 release-notes: |-
   * Update to CLN 24.08.2 [Release Notes](https://github.com/ElementsProject/lightning/releases/tag/v24.08.2)
-  * Update clboss to 0.14.0
+  * Update clboss to 0.14.1
 build: ["make"]
 description:
   short: "An implementation of the Lightning Network protocol by Blockstream."
